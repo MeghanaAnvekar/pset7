@@ -18,14 +18,14 @@
         {
            apologize("Username and Password cannot be empty!");
         }
-        else if( $_POST["password"] != $_POST["confirmation"])
-        {
-            apologize(" Passwords do not be match!");
+        else if(!( $_POST["password"] == $_POST["confirmation"]))
+            {
+                apologize(" Passwords do not match!");
         
-        }
+            }
         else
         {
-            $result = CS50::query("INSERT IGNORE INTO users (username, hash, cash) VALUES(?, ?, 10000.0000)", $_POST["username"], password_hash($_POST["password"], PASSWORD_DEFAULT));
+            $result = CS50::query("INSERT IGNORE INTO users (username, hash) VALUES(?, ?)", $_POST["username"], password_hash($_POST["password"], PASSWORD_DEFAULT));
         
             if($result == true)
             {
