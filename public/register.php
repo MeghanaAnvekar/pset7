@@ -25,7 +25,7 @@
             }
         else
         {
-            $result = CS50::query("INSERT IGNORE INTO users (username, hash) VALUES(?, ?)", $_POST["username"], password_hash($_POST["password"], PASSWORD_DEFAULT));
+            $result = CS50::query("INSERT IGNORE INTO users (username, hash,cash) VALUES(?, ?,10000.00)", $_POST["username"], password_hash($_POST["password"], PASSWORD_DEFAULT));
         
             if($result == true)
             {
