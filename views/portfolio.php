@@ -1,12 +1,31 @@
-<div>
-    <iframe allowfullscreen frameborder="0" height="315" src="https://www.youtube.com/embed/oHg5SJYRHA0?autoplay=1&iv_load_policy=3&rel=0" width="420"></iframe>
-</div>
+
+ <table style="width:100% ;text-align: left" >
+
+    <thead>
+        <tr>
+            <th colspan = "2">Symbol</th>
+            <th colspan = "2">Name</th>
+            <th colspan = "2">Shares</th>
+            <th colspan = "2">Price</th>
+            <th colspan = "2">Total</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
 <?php foreach ($positions as $position): ?>
-
-    <tr>
-        <td><?= $position["symbol"] ?></td>
-        <td><?= $position["shares"] ?></td>
-        <td><?= $position["price"] ?></td>
-    </tr>
-
+   
+    
+        <tr>
+            <td colspan = "2"><?= $position["symbol"] ?></td>
+            <td colspan = "2"><?php $s = lookup($position["symbol"])?> <?= $s["name"] ?> </td>
+            <td colspan = "2"><?= $position["shares"] ?></td>
+            <td colspan = "2"><?= $position["price"] ?></td>
+            <td colspan = "2"><?=  ($position["price"] * $position["shares"]) ?></td>
+        </tr>
+   
 <?php endforeach ?>
+
+    </tbody>
+
+</table>

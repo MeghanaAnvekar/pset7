@@ -2,9 +2,8 @@
 
     // configuration
     require("../includes/config.php"); 
-    $user = CS50::query("SELECT * FROM users WHERE id = ?",$_SESSION["id"]);
-    $rows = CS50::query("SELECT symbol, shares FROM bought WHERE user_id= ?",$user["id"]) ;
     
+    $rows = CS50::query("SELECT * FROM bought WHERE user_id = ?", $_SESSION["id"]);
     $positions = [];
     foreach ($rows as $row)
     {
@@ -18,9 +17,9 @@
                 "symbol" => $row["symbol"]
             ];
         }
-}
+    }
 
     // render portfolio
-    render("portfolio.php", ["positions" => $positions, "title" => "Portfolio"]);
+   render("portfolio.php", ["positions" => $positions, "title" => "Portfolio"]);
 
 ?>
