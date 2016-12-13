@@ -3,11 +3,11 @@
 
     <thead>
         <tr>
-            <th colspan = "2">Symbol</th>
-            <th colspan = "2">Name</th>
-            <th colspan = "2">Shares</th>
-            <th colspan = "2">Price</th>
-            <th colspan = "2">Total</th>
+            <th>Symbol</th>
+            <th>Name</th>
+            <th>Shares</th>
+            <th>Price</th>
+            <th>Total</th>
         </tr>
     </thead>
 
@@ -17,11 +17,11 @@
    
     
         <tr>
-            <td colspan = "2"><?= $position["symbol"] ?></td>
-            <td colspan = "2"><?php $s = lookup($position["symbol"])?> <?= $s["name"] ?> </td>
-            <td colspan = "2"><?= $position["shares"] ?></td>
-            <td colspan = "2"><?= $position["price"] ?></td>
-            <td colspan = "2"><?=  ($position["price"] * $position["shares"]) ?></td>
+            <td><?= $position["symbol"] ?></td>
+            <td><?php $s = lookup($position["symbol"])?> <?= $s["name"] ?> </td>
+            <td><?= $position["shares"] ?></td>
+            <td><?= $position["price"] ?></td>
+            <td><?=  ($position["price"] * $position["shares"]) ?></td>
         </tr>
    
 <?php endforeach ?>
