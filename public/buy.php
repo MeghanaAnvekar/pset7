@@ -19,14 +19,24 @@
         foreach ($d as $data)
             $data[] = ["cash" => $d];
         
-        if($data["cash"] >= $cost)
+        if($data["cash"] >= $cost* $_POST["shares"])
         {
-            $cash = $data["cash"] - $cost;
+            $insert = CS50::query("SELECT * FROM bought WHERE user_id = ? AND symbol = ?",$_SESSION["id"],$_POST["symbol"]);
+            
+            $cash = $data["cash"] - $cost * $_POST["shares"];
             
             $query = CS50::query("UPDATE users SET cash = ? WHERE id = ?", $cash, $_SESSION["id"]);
-             
             
-            CS50::query("INSERT INTO bought (user_id,symbol,shares) VALUES(?,?,?)", $_SESSION["id"],$_POST["symbol"],$_POST["shares"]);
+            if($insert === false)
+            {
+                
+                CS50::query("INSERT INTO bought (user_id,symbol,shares) VALUES(?,?,?)", $_SESSION["id"],$_POST["symbol"],$_POST["shares"]);
+            
+            }
+            else
+            {
+                CS50::query("UPDATE bought SET shares = ? WHERE symbol = ?", $insert[0]["shares"] + $_POST["shares"] , $_POST["symbol"]);
+            }
             
             $rows = CS50::query("SELECT * FROM bought WHERE user_id = ?", $_SESSION["id"]);
             $positions = [];
