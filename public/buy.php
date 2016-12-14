@@ -26,8 +26,10 @@
             $cash = $data["cash"] - $cost * $_POST["shares"];
             
             $query = CS50::query("UPDATE users SET cash = ? WHERE id = ?", $cash, $_SESSION["id"]);
+            CS50::query("INSERT INTO history (user_id,symbol,shares,action,price,date_time) VALUES(?,?,?,?,?,?)", $_SESSION["id"],$_POST["symbol"],$_POST["shares"],"bought",$cost,date("Y-m-d H:i:s", $current_timestamp = time()));
             
-            if($insert === false)
+            
+            if($insert == false)
             {
                 
                 CS50::query("INSERT INTO bought (user_id,symbol,shares) VALUES(?,?,?)", $_SESSION["id"],$_POST["symbol"],$_POST["shares"]);

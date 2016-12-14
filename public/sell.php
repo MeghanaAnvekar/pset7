@@ -50,6 +50,7 @@
             {
                
                 $positions=[];
+                
                 $q = CS50::query("DELETE FROM bought WHERE (symbol = ?) AND (user_id = ?)",$_POST["symbol"],$_SESSION["id"]);
             
                 
@@ -63,8 +64,9 @@
                     
                     CS50::query("UPDATE users SET cash = (cash + ?) WHERE id = ?",((float)$data["shares"] * (float)$data["price"]),$_SESSION["id"]);
                     
-                    
-                    render("sold.php", ["positions" => $positions, "title" => "Sold"]);
+                    CS50::query("INSERT INTO history (user_id,symbol,shares,action,price,date_time) VALUES(?,?,?,?,?,?)", $_SESSION["id"],$_POST["symbol"],$data["shares"],"sold",$data["price"],date("Y-m-d H:i:s", $current_timestamp = time()));
+                   
+                    render("sold.php", ["positions" => $positions, "title" => "Portfolio"]);
                 }
             }
         }
