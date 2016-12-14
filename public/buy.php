@@ -14,13 +14,19 @@
         $stock = lookup($_POST["symbol"]);
         $cost = (float)$stock["price"] * $_POST["shares"];
         
-        $data = CS50::query("SELECT * FROM users WHERE id =?", $_SESSION["id"]);
+        $d = CS50::query("SELECT cash FROM users WHERE id =?", $_SESSION["id"]);
+        
+        foreach ($d as $data)
+            $data[] = ["cash" => $d];
         
         if($data["cash"] >= $cost)
         {
             $cash = $data["cash"] - $cost;
             
             $query = CS50::query("UPDATE users SET cash = ? WHERE id = ?", $cash, $_SESSION["id"]);
+             
+            
+            CS50::query("INSERT INTO bought (user_id,symbol,shares) VALUES(?,?,?)", $_SESSION["id"],$_POST["symbol"],$_POST["shares"]);
             
             $rows = CS50::query("SELECT * FROM bought WHERE user_id = ?", $_SESSION["id"]);
             $positions = [];

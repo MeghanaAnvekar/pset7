@@ -1,8 +1,10 @@
 <?php
    
-    $c["cash"] = CS50::query("SELECT cash FROM users WHERE id = ?", $_SESSION["id"]);
-    $cash = number_format((double)$c["cash"],"4",'.',',');
-   
+    $c = CS50::query("SELECT cash FROM users WHERE id = ?", $_SESSION["id"]);
+    foreach ($c as $d)
+        $d[] = ["cash" => $c];
+    $cash = number_format((double)$d["cash"],"4",'.',',');
+
  ?>
 
 <form action="buy.php" method="post">
