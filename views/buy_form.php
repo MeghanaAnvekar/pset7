@@ -16,7 +16,7 @@
             <input autocomplete="off" autofocus class="form-control" name="symbol" placeholder="Symbol" type="text"/>
         </div>
          <div class="form-group">
-            <input autocomplete="off" autofocus class="form-control" name="shares" placeholder="Shares" type="number" min="1"/>
+            <input autocomplete="off"  class="form-control" name="shares" placeholder="Shares" type="number" min="1"/>
         </div>
         
         <div class="form-group">
