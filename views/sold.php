@@ -7,6 +7,7 @@
             <th>Shares</th>
             <th>Price</th>
             <th>Total</th>
+            
         </tr>
     </thead>
 
@@ -19,8 +20,8 @@
             <td><?= $position["symbol"] ?></td>
             <td><?php $s = lookup($position["symbol"])?> <?= $s["name"] ?> </td>
             <td><?= $position["shares"] ?></td>
-            <td><?= $position["price"] ?></td>
-            <td><?=  ($position["price"] * $position["shares"]) ?></td>
+            <td><?= $s["price"] ?></td>
+            <td><?=  ($s["price"] * $position["shares"]) ?></td>
         </tr>
    
 <?php endforeach ?>
