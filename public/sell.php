@@ -39,9 +39,9 @@
         else
         {
              
-             $data["shares"] = CS50::query("SELECT shares FROM bought WHERE (symbol = ?) AND (user_id =?)", $_POST["symbol"], $_SESSION["id"]);
+             $d = CS50::query("SELECT shares FROM bought WHERE (symbol = ?) AND (user_id =?)", $_POST["symbol"], $_SESSION["id"]);
             
-            if( $data["shares"] ==false)
+            if( $d ==false)
             {
                 apologize("You don't own share(s) from that company. ");
                 
@@ -50,6 +50,7 @@
             {
                
                 $positions=[];
+                $positions = CS50::query("SELECT * FROM bought WHERE (symbol = ?) AND (user_id = ?)",$_POST["symbol"], $_SESSION["id"]);
                 
                 $q = CS50::query("DELETE FROM bought WHERE (symbol = ?) AND (user_id = ?)",$_POST["symbol"],$_SESSION["id"]);
             
@@ -60,13 +61,15 @@
                 }
                 else
                 {
-                    $positions = CS50::query("SELECT * FROM bought WHERE (user_id = ?)", $_SESSION["id"]);
                     
-                    CS50::query("UPDATE users SET cash = (cash + ?) WHERE id = ?",((float)$data["shares"] * (float)$data["price"]),$_SESSION["id"]);
+                    foreach ($d as $a)
+                         $a[] = ["shares" => $d];
+;                    
+                    CS50::query("UPDATE users SET cash = (cash + ?) WHERE id = ?",((float)$a["shares"] * (float)$data["price"]),$_SESSION["id"]);
                     
-                    CS50::query("INSERT INTO history (user_id,symbol,shares,action,price,date_time) VALUES(?,?,?,?,?,?)", $_SESSION["id"],$_POST["symbol"],$data["shares"],"sold",$data["price"],date("Y-m-d H:i:s", $current_timestamp = time()));
+                    CS50::query("INSERT INTO history (user_id,symbol,shares,action,price,date_time) VALUES(?,?,?,?,?,?)", $_SESSION["id"],$_POST["symbol"],$a["shares"],"sold",$data["price"],date("Y-m-d H:i:s", $current_timestamp = time()));
                    
-                    render("sold.php", ["positions" => $positions, "title" => "Portfolio"]);
+                    render("sold.php", ["positions" => $positions, "title" => "Sold"]);
                 }
             }
         }
